@@ -2,14 +2,24 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "framework": "fastapi",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/$1"
+    }
+  ],
   "env": {
     "LOG_LEVEL": "INFO",
     "LOG_FILE_ENABLED": "false",
     "DATA_DIR": "/tmp/data"
   },
   "functions": {
-    "main.py": {
-      "includeFiles": "app/static/**"
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": [
+        "app/static/**",
+        "config.defaults.toml"
+      ]
     }
   }
 }
